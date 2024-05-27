@@ -55,7 +55,7 @@ func CurrencyHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	select {
-	case <-time.After(100 * time.Millisecond):
+	case <-time.After(10 * time.Millisecond):
 
 		res, err := http.Get("https://economia.awesomeapi.com.br/json/last/USD-BRL")
 		if err != nil {
