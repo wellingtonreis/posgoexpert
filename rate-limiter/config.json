@@ -1,0 +1,7 @@
+{
+    "REDIS_HOST": "redisdb",
+    "REDIS_PORT": "6379",
+    "RATE_LIMIT_BY_IP": "5",
+    "RATE_LIMIT_BY_TOKEN": "100",
+    "BLOCK_DURATION": "300"
+}

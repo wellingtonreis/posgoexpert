@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "3000:3000"
+    volumes:
+      - $GOPATH/src/rate-limiter:/app
+    networks:
+      - rate_limiter
+    depends_on:
+      - redisdb
+  redisdb:
+    image: redis:alpine
+    container_name: redisdb
+    ports:
+      - "6379:6379"
+    networks:
+      - rate_limiter
+
+networks:
+  rate_limiter:
+  
