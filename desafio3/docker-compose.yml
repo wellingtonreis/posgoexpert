@@ -1,0 +1,33 @@
+version: '3'
+services:
+  servicea:
+    build:
+      context: ./service_a
+      dockerfile: Dockerfile
+    container_name: servicea
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./service_a:/service_a
+    networks:
+      - cep
+    working_dir: /service_a
+    command: air
+
+  serviceb:
+    build:
+      context: ./service_b
+      dockerfile: Dockerfile
+    container_name: serviceb
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./service_b:/service_b
+    networks:
+      - cep
+    working_dir: /service_b
+    command: air
+
+networks:
+  cep:
+    driver: bridge
