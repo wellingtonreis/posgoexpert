@@ -16,7 +16,7 @@ Para iniciar os serviços definidos no arquivo `docker-compose.yml` em segundo p
     ```sh
     docker-compose ps
     ```
-    
+
 4. **Compile o serviço `service_a` (se necessario)**:
     ```sh
     cd desafio3/service_a
@@ -28,3 +28,6 @@ Para iniciar os serviços definidos no arquivo `docker-compose.yml` em segundo p
     cd desafio3/service_b
     go build -o ./bin/service_b ./cmd/api/main.go
     ```
+
+6. **Acesse o Zipkin para rastreamento distribuído**:
+    Abra seu navegador e vá para [http://localhost:9411](http://localhost:9411) para acessar a interface do Zipkin.
