@@ -13,6 +13,9 @@ services:
       - cep
     working_dir: /service_a
     command: air
+    depends_on:
+      - serviceb
+      - zipkin
 
   serviceb:
     build:
@@ -27,6 +30,15 @@ services:
       - cep
     working_dir: /service_b
     command: air
+    depends_on:
+      - zipkin
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - cep
 
 networks:
   cep:

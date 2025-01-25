@@ -1,15 +1,18 @@
 package main
 
 import (
-	"service_a/internal/config"
+	"context"
+	"log"
 	"service_a/internal/routes"
 
+	zipkin "service_a/internal/pkg/zipkin"
+
+	otelfiber "github.com/gofiber/contrib/otelfiber"
 	fiber "github.com/gofiber/fiber/v2"
 	cors "github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
-	config.LoadEnv()
 	app := fiber.New()
 	app.Use(cors.New())
 
@@ -21,6 +24,15 @@ func main() {
 		AllowCredentials: false,
 		MaxAge:           300,
 	}))
+
+	app.Use(otelfiber.Middleware())
+	tracerProvider := zipkin.SetupOTelMiddleware(app, "serviceA")
+	defer func() {
+		if err := tracerProvider.Shutdown(context.Background()); err != nil {
+			log.Printf("Error shutting down tracer provider: %v", err)
+		}
+	}()
+
 	routes.SetupRoutes(app)
 	app.Listen(":8000")
 }

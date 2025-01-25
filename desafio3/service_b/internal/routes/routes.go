@@ -7,7 +7,6 @@ import (
 )
 
 func SetupRoutes(app *fiber.App) {
-
 	api := app.Group("/api/v1")
 	cepGroup := api.Group("/cep")
 	cepGroup.Get("/:number/get", handlers.TemperatureRecoveryLocation)
