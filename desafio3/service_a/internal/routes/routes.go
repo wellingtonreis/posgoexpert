@@ -2,7 +2,7 @@ package routes
 
 import (
 	"log"
-	"service_a/internal/di"
+	di "service_a/internal/di"
 
 	fiber "github.com/gofiber/fiber/v2"
 )

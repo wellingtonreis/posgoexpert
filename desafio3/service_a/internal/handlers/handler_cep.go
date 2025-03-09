@@ -13,12 +13,16 @@ import (
 
 var validateCep = validator.New()
 
-type CepHandler struct {
-	cepUseCase *usecase.CepUseCase
+type CepUseCase interface {
+	GetCep(number string) (*dto.CepDTO, error)
 }
 
-func NewCepHandler(uc *usecase.CepUseCase) CepHandler {
-	return CepHandler{cepUseCase: uc}
+type CepHandler struct {
+	cepUseCase usecase.CepUseCase
+}
+
+func NewCepHandler(uc usecase.CepUseCase) *CepHandler {
+	return &CepHandler{cepUseCase: uc}
 }
 
 func (h *CepHandler) GetCep(c *fiber.Ctx) error {
