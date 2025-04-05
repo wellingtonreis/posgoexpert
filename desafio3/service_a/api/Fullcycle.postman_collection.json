@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cep\": \"72316317\"\r\n}",
+							"raw": "{\r\n    \"cep\": \"01001000\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

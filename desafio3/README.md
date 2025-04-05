@@ -36,3 +36,5 @@ Para iniciar os serviços definidos no arquivo `docker-compose.yml` em segundo p
     go test ./..
 
 8. **Util - Existe um makefile em cada service que auxilia a executar os comandos**
+
+9. **Observação: dentro do diretório service_a/api existe um arquivo de coleção postman para realizar teste no Cloud RUN**
