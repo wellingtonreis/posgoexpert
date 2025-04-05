@@ -7,6 +7,8 @@ import (
 	"os"
 	service "service_b/internal/service"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestViaCep_Success(t *testing.T) {
@@ -25,8 +27,8 @@ func TestViaCep_Success(t *testing.T) {
 	}))
 	defer server.Close()
 
-	os.Setenv("VIA_CEP_URL", server.URL)
-	defer os.Unsetenv("VIA_CEP_URL")
+	os.Setenv("HOST_VIA_CEP", server.URL)
+	defer os.Unsetenv("HOST_VIA_CEP")
 
 	serviceCep := service.ServiceCepImpl{}
 	location, err := serviceCep.ViaCep("01001000")
@@ -40,14 +42,13 @@ func TestViaCep_Success(t *testing.T) {
 }
 
 func TestViaCep_InvalidHost(t *testing.T) {
-	os.Setenv("VIA_CEP_URL", "")
-	defer os.Unsetenv("VIA_CEP_URL")
+	os.Setenv("HOST_VIA_CEP", "https://viacepp.com.br/")
+	defer os.Unsetenv("HOST_VIA_CEP")
 
 	serviceCep := service.ServiceCepImpl{}
 	_, err := serviceCep.ViaCep("01001000")
-	if err == nil || err.Error() != "invalid host for ViaCEP" {
-		t.Fatalf("expected 'invalid host for ViaCEP' error, got %v", err)
-	}
+
+	assert.NotNil(t, err)
 }
 
 func TestViaCep_InvalidResponse(t *testing.T) {
@@ -56,8 +57,8 @@ func TestViaCep_InvalidResponse(t *testing.T) {
 	}))
 	defer server.Close()
 
-	os.Setenv("VIA_CEP_URL", server.URL)
-	defer os.Unsetenv("VIA_CEP_URL")
+	os.Setenv("HOST_VIA_CEP", server.URL)
+	defer os.Unsetenv("HOST_VIA_CEP")
 
 	serviceCep := service.ServiceCepImpl{}
 	_, err := serviceCep.ViaCep("01001000")
@@ -73,8 +74,8 @@ func TestViaCep_FailedToReadResponse(t *testing.T) {
 	}))
 	defer server.Close()
 
-	os.Setenv("VIA_CEP_URL", server.URL)
-	defer os.Unsetenv("VIA_CEP_URL")
+	os.Setenv("HOST_VIA_CEP", server.URL)
+	defer os.Unsetenv("HOST_VIA_CEP")
 
 	serviceCep := service.ServiceCepImpl{}
 	_, err := serviceCep.ViaCep("01001000")

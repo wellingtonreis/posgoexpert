@@ -28,7 +28,7 @@ func (s ServiceWeatherApiImpl) WeatherApi(q string) (Weather, error) {
 		return Weather{}, errors.New("invalid host for WeatherAPI")
 	}
 
-	key := config.GetEnv("KEY_WEATHER_API", "")
+	key := config.GetEnv("KEY_WEATHER_API", "32598b45dc044852846173447251801")
 	if key == "" {
 		return Weather{}, errors.New("invalid key for WeatherAPI")
 	}

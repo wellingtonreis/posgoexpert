@@ -18,10 +18,7 @@ func TestBuildContainerCep(t *testing.T) {
 	assert.NotNil(t, container.CepUseCase)
 	assert.NotNil(t, container.CepHandler)
 
-	expectedService := service.ServiceCepImpl{
-		HTTPClient: nil,
-		BaseURL:    "http://localhost:9000",
-	}
+	expectedService := service.NewServiceCepImpl(nil, "http://serviceb:9000")
 	expectedUseCase := usecase.NewCepUseCase(expectedService)
 	assert.Equal(t, expectedUseCase, container.CepUseCase)
 

@@ -14,7 +14,7 @@ func TestTemperatureRecoveryLocation_ValidCep(t *testing.T) {
 	app := fiber.New()
 	app.Get("/temperature/:number", handlers.TemperatureRecoveryLocation)
 
-	req := httptest.NewRequest("GET", "/temperature/12345678", nil)
+	req := httptest.NewRequest("GET", "/temperature/01001000", nil)
 	resp, err := app.Test(req)
 
 	assert.NoError(t, err)
@@ -25,7 +25,7 @@ func TestTemperatureRecoveryLocation_InvalidCep(t *testing.T) {
 	app := fiber.New()
 	app.Get("/temperature/:number", handlers.TemperatureRecoveryLocation)
 
-	req := httptest.NewRequest("GET", "/temperature/123", nil)
+	req := httptest.NewRequest("GET", "/temperature/01001", nil)
 	resp, err := app.Test(req)
 
 	assert.NoError(t, err)

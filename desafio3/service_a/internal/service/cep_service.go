@@ -16,10 +16,22 @@ type ServiceCepImpl struct {
 	BaseURL    string
 }
 
-func (s ServiceCepImpl) ServiceCep(number string) (domain.TemperatureLocation, error) {
+func NewServiceCepImpl(httpClient *http.Client, baseURL string) *ServiceCepImpl {
+
+	if httpClient == nil {
+		httpClient = &http.Client{}
+	}
+
+	return &ServiceCepImpl{
+		HTTPClient: httpClient,
+		BaseURL:    baseURL,
+	}
+}
+
+func (s *ServiceCepImpl) ServiceCep(number string) (domain.TemperatureLocation, error) {
 
 	if s.HTTPClient == nil {
-		s.HTTPClient = &http.Client{}
+		return domain.TemperatureLocation{}, errors.New("http client is not initialized")
 	}
 
 	url := fmt.Sprintf("%s/api/v1/cep/%s/get", s.BaseURL, number)

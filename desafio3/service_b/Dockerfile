@@ -1,26 +1,21 @@
 FROM golang:1.23.0 AS builder
 
-WORKDIR /service_b
-
-RUN GOBIN=/usr/local/bin go install github.com/air-verse/air@latest
+WORKDIR /app
 
 COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
 
-RUN go mod tidy
-RUN go build -o ./bin/service_b ./cmd/api/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/service_b ./cmd/api/main.go
 
-FROM alpine:latest
+FROM gcr.io/distroless/static:nonroot
 
-RUN apk --no-cache add bash libc6-compat
+WORKDIR /app
 
-WORKDIR /service_b
+COPY --from=builder /app/bin/service_b .
 
-COPY --from=builder /service_b/bin/service_b .
-COPY --from=builder /usr/local/bin/air /usr/local/bin/air
+ENV PORT=8000
+EXPOSE 8000
 
-EXPOSE 9000
-
-CMD ["air"]
+CMD ["/app/service_b"]

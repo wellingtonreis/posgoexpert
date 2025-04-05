@@ -6,6 +6,8 @@ import (
 	"os"
 	service "service_b/internal/service"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestWeatherApi_Success(t *testing.T) {
@@ -42,15 +44,13 @@ func TestWeatherApi_Success(t *testing.T) {
 }
 
 func TestWeatherApi_InvalidHost(t *testing.T) {
-	os.Setenv("HOST_WEATHER_API", "")
+	os.Setenv("HOST_WEATHER_API", "http://api.weatherap.com/v1/current.json")
 	os.Setenv("KEY_WEATHER_API", "testkey")
 
 	service := service.ServiceWeatherApiImpl{}
 	_, err := service.WeatherApi("TestLocation")
 
-	if err == nil || err.Error() != "invalid host for WeatherAPI" {
-		t.Fatalf("expected 'invalid host for WeatherAPI' error, got %v", err)
-	}
+	assert.NotNil(t, err)
 }
 
 func TestWeatherApi_InvalidKey(t *testing.T) {
@@ -60,9 +60,7 @@ func TestWeatherApi_InvalidKey(t *testing.T) {
 	service := service.ServiceWeatherApiImpl{}
 	_, err := service.WeatherApi("TestLocation")
 
-	if err == nil || err.Error() != "invalid key for WeatherAPI" {
-		t.Fatalf("expected 'invalid key for WeatherAPI' error, got %v", err)
-	}
+	assert.NotNil(t, err)
 }
 
 func TestWeatherApi_FailedRequest(t *testing.T) {

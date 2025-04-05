@@ -12,10 +12,7 @@ type ContainerCep struct {
 }
 
 func BuildContainerCep() (*ContainerCep, error) {
-	cepService := service.ServiceCepImpl{
-		HTTPClient: nil,
-		BaseURL:    "http://localhost:9000",
-	}
+	cepService := service.NewServiceCepImpl(nil, "http://serviceb:9000")
 	cepUseCase := usecase.NewCepUseCase(cepService)
 	cepHandler := handlers.NewCepHandler(*cepUseCase)
 

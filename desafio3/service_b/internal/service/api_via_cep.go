@@ -29,7 +29,7 @@ type Location struct {
 
 func (s ServiceCepImpl) ViaCep(number string) (Location, error) {
 
-	host := config.GetEnv("VIA_CEP_URL", "https://viacep.com.br")
+	host := config.GetEnv("HOST_VIA_CEP", "https://viacep.com.br")
 	if host == "" {
 		return Location{}, errors.New("invalid host for ViaCEP")
 	}

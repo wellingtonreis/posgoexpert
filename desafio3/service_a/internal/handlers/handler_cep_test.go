@@ -28,10 +28,7 @@ func (m *MockCepUseCase) GetCep(number string) (*dto.CepDTO, error) {
 func TestGetCep(t *testing.T) {
 	app := fiber.New()
 	mockUseCase := new(MockCepUseCase) // Inicializando o mock
-	cepService := service.ServiceCepImpl{
-		HTTPClient: nil,
-		BaseURL:    "http://localhost:9000/",
-	}
+	cepService := service.NewServiceCepImpl(nil, "http://serviceb:9000")
 	cepUseCase := usecase.NewCepUseCase(cepService)
 	handler := handlers.NewCepHandler(*cepUseCase)
 

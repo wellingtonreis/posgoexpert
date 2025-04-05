@@ -1,0 +1,17 @@
+
+FROM golang:1.23.0
+
+WORKDIR /app
+
+RUN GOBIN=/usr/local/bin go install github.com/air-verse/air@latest
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN mkdir -p bin
+
+EXPOSE 8000
+
+CMD ["air"]
