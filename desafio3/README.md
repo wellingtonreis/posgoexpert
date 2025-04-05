@@ -4,7 +4,7 @@ Para iniciar os serviços definidos no arquivo `docker-compose.yml` em segundo p
 
 1. **Navegue até o diretório do projeto**:
     ```sh
-    cd /home/wgreis/go/src/posgoexpert/desafio3
+    cd posgoexpert/desafio3
     ```
 
 2. **Execute o comando `docker-compose up -d`**:
@@ -31,3 +31,8 @@ Para iniciar os serviços definidos no arquivo `docker-compose.yml` em segundo p
 
 6. **Acesse o Zipkin para rastreamento distribuído**:
     Abra seu navegador e vá para [http://localhost:9411](http://localhost:9411) para acessar a interface do Zipkin.
+
+7. **Executar teste unitário (Executar dentro dos containers)**:
+    go test ./..
+
+8. **Util - Existe um makefile em cada service que auxilia a executar os comandos**
