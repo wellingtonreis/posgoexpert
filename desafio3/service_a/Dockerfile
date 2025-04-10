@@ -7,15 +7,15 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/service_a ./cmd/api/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/servicea ./cmd/api/main.go
 
 FROM gcr.io/distroless/static:nonroot
 
 WORKDIR /app
 
-COPY --from=builder /app/bin/service_a .
+COPY --from=builder /app/bin/servicea .
 
-ENV PORT=8000
-EXPOSE 8000
+ENV PORT=8080
+EXPOSE 8080
 
-CMD ["/app/service_a"]
+CMD ["/app/servicea"]

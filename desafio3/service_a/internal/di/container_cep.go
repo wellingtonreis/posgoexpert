@@ -1,6 +1,7 @@
 package di
 
 import (
+	config "service_a/internal/config"
 	handlers "service_a/internal/handlers"
 	service "service_a/internal/service"
 	usecase "service_a/internal/usecase"
@@ -12,7 +13,15 @@ type ContainerCep struct {
 }
 
 func BuildContainerCep() (*ContainerCep, error) {
-	cepService := service.NewServiceCepImpl(nil, "http://serviceb:9000")
+
+	environment := config.GetEnv("ENVIRONMENT", "production")
+
+	url := "http://localhost:9000"
+	if environment == "development" {
+		url = "http://serviceb:9000"
+	}
+
+	cepService := service.NewServiceCepImpl(nil, url)
 	cepUseCase := usecase.NewCepUseCase(cepService)
 	cepHandler := handlers.NewCepHandler(*cepUseCase)
 

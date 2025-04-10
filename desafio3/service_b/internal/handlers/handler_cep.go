@@ -28,7 +28,7 @@ func TemperatureRecoveryLocation(c *fiber.Ctx) error {
 	err := validateCep.Var(input.Number, "required,numeric,len=8")
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
+			"error": "Invalid zip code",
 		})
 	}
 
@@ -46,8 +46,8 @@ func TemperatureRecoveryLocation(c *fiber.Ctx) error {
 	if err != nil {
 		span.SetStatus(codes.Error, "Error fetching CEP and temperature")
 		span.RecordError(err)
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": err.Error(),
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "can not find zipcode",
 		})
 	}
 

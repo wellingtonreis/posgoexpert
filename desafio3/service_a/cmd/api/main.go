@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	config "service_a/internal/config"
 	"service_a/internal/routes"
 
 	zipkin "service_a/internal/pkg/zipkin"
@@ -13,6 +14,7 @@ import (
 )
 
 func main() {
+	config.LoadEnv()
 	app := fiber.New()
 	app.Use(cors.New())
 
@@ -34,5 +36,7 @@ func main() {
 	}()
 
 	routes.SetupRoutes(app)
-	app.Listen(":8000")
+
+	port := config.GetEnv("PORT", "8080")
+	app.Listen(":" + port)
 }

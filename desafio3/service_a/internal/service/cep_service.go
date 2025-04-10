@@ -7,8 +7,6 @@ import (
 	"io"
 	"net/http"
 	domain "service_a/internal/domain"
-
-	fiber "github.com/gofiber/fiber/v2"
 )
 
 type ServiceCepImpl struct {
@@ -42,13 +40,17 @@ func (s *ServiceCepImpl) ServiceCep(number string) (domain.TemperatureLocation, 
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != fiber.StatusOK {
-		return domain.TemperatureLocation{}, errors.New("invalid response")
-	}
-
 	body, errResponse := io.ReadAll(resp.Body)
 	if errResponse != nil {
 		return domain.TemperatureLocation{}, fmt.Errorf("failed to read response body: %w", errResponse)
+	}
+
+	var jsonResponse struct {
+		Error string `json:"error"`
+	}
+
+	if err := json.Unmarshal(body, &jsonResponse); err == nil && jsonResponse.Error != "" {
+		return domain.TemperatureLocation{}, fmt.Errorf("%s", jsonResponse.Error)
 	}
 
 	var temperatureLocation domain.TemperatureLocation

@@ -36,5 +36,10 @@ func main() {
 	}()
 
 	routes.SetupRoutes(app)
-	app.Listen(":9000")
+
+	port := config.GetEnv("PORT", "8080")
+	if port == "" {
+		port = "8080"
+	}
+	app.Listen(":" + port)
 }

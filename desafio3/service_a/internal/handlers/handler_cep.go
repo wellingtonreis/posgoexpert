@@ -39,7 +39,7 @@ func (h *CepHandler) GetCep(c *fiber.Ctx) error {
 
 	if err := validateCep.Var(input.Number, "required,numeric,len=8"); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			"error": err.Error(),
+			"error": "Invalid zip code",
 		})
 	}
 

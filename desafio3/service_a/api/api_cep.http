@@ -6,3 +6,25 @@ Accept: application/json
 {
     "cep": "01001000"
 }
+
+###
+
+POST http://localhost:8000/api/v1/cep/post HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+Accept: application/json
+
+{
+    "cep": "00000000"
+}
+
+###
+
+POST http://localhost:8000/api/v1/cep/post HTTP/1.1
+Host: localhost:8000
+Content-Type: application/json
+Accept: application/json
+
+{
+    "cep": "65465465454654"
+}

@@ -6,6 +6,7 @@ require (
 	github.com/go-playground/validator/v10 v10.24.0
 	github.com/gofiber/contrib/otelfiber v1.0.10
 	github.com/gofiber/fiber/v2 v2.52.6
+	github.com/joho/godotenv v1.5.1
 	github.com/stretchr/testify v1.10.0
 	go.opentelemetry.io/otel v1.34.0
 	go.opentelemetry.io/otel/exporters/zipkin v1.34.0
